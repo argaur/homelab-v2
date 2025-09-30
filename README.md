@@ -1,4 +1,4 @@
-Homelab Infrastructure 🏠
+## Homelab Infrastructure 🏠
 
 Welcome to my personal homelab repository! This project is a complete, self-hosted infrastructure running on a dedicated server, managed with a GitOps-centric workflow. All services are deployed as Docker containers and orchestrated with `docker-compose`.
 
