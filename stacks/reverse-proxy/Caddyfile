@@ -1,0 +1,10 @@
+home.msi.local         { reverse_proxy http://homepage:3000 }
+grafana.msi.local      { reverse_proxy http://grafana:3000 }
+prom.msi.local         { reverse_proxy http://prometheus:9090 }
+portainer.msi.local    { reverse_proxy http://portainer:9000 }
+nocodb.msi.local       { reverse_proxy http://nocodb:8080 }
+n8n.msi.local          { reverse_proxy http://n8n:5678 }
+next.msi.local         { reverse_proxy http://nextcloud:80 }
+cadvisor.msi.local     { reverse_proxy http://cadvisor:8080 }
+glances.msi.local      { reverse_proxy http://glances:61208 }
+blackbox.msi.local     { reverse_proxy http://blackbox:9115 }

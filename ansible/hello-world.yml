@@ -1,0 +1,18 @@
+---
+- name: A simple example playbook
+  hosts: homelab_servers
+  gather_facts: false
+
+  tasks:
+    - name: Print a message on the remote host
+      ansible.builtin.command: echo "Hello from Ansible on the MSI server"
+      register: echo_output
+
+    - name: Display the message from the command
+      ansible.builtin.debug:
+        msg: "{{ echo_output.stdout }}"
+
+    - name: Create a file on the remote host
+      ansible.builtin.copy:
+        content: "This file was created by Ansible."
+        dest: "/tmp/ansible_test_file.txt"

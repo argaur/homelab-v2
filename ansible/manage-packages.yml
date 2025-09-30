@@ -1,0 +1,11 @@
+---
+- name: Install or Update System Packages
+  hosts: homelab_servers
+  become: true
+
+  tasks:
+    - name: Ensure htop is installed
+      ansible.builtin.apt:
+        name: htop
+        state: present
+        update_cache: yes

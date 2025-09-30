@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      - VAULT_API_ADDR=http://192.168.29.50:18201
+      - VAULT_LOCAL_CONFIG={"ui":true,"disable_mlock":true,"storage":{"file":{"path":"/vault/file"}},"listener":{"tcp":{"address":"0.0.0.0:8200","tls_disable":1}},"api_addr":"http://192.168.29.50:18201"}
+    ports:
+      - "18201:8200"        # host:container
+    volumes:
+      - ./file:/vault/file
+    command: ["server"]      # <<< important
+    networks:
+      - core
+
+networks:
+  core:
+    external: true

@@ -1,0 +1,12 @@
+services:
+  dozzle:
+    image: ghcr.io/amir20/dozzle:latest
+    container_name: dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks: [core]
+    restart: unless-stopped
+
+networks:
+  core:
+    external: true

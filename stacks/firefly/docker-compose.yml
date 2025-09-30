@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  firefly-iii:
+    image: fireflyiii/core:6.1.13
+    container_name: firefly-iii
+    restart: unless-stopped
+    volumes:
+      - ./upload:/var/www/firefly-iii/storage/upload
+    ports:
+      - "8088:8080"
+    environment:
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - APP_KEY=${APP_KEY}
+      - SITE_OWNER=${SITE_OWNER}
+      - TRUSTED_PROXIES=${TRUSTED_PROXIES}
+      - TZ=Asia/Kolkata
+    networks:
+      - core
+
+networks:
+  core:
+    external: true

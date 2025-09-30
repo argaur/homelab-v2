@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  semaphore:
+    image: semaphoreui/semaphore:v2.9.22
+    container_name: semaphore
+    ports:
+      - "3005:3000"
+    environment:
+      - SEMAPHORE_DB_DIALECT=postgres
+      - SEMAPHORE_DB_HOST=postgres
+      - SEMAPHORE_DB_PORT=5432
+      - SEMAPHORE_DB_USER=semaphore_user
+      - SEMAPHORE_DB_PASS=${DB_PASS}
+      - SEMAPHORE_DB=semaphore
+      - SEMAPHORE_ACCESS_KEY_ENCRYPTION=${SEMAPHORE_ENCRYPTION_KEY}
+      - SEMAPHORE_ADMIN_NAME=${SEMAPHORE_ADMIN_NAME}
+      - SEMAPHORE_ADMIN_EMAIL=${SEMAPHORE_ADMIN_EMAIL}
+      - SEMAPHORE_ADMIN=${SEMAPHORE_ADMIN_USER}
+      - SEMAPHORE_ADMIN_PASSWORD=${SEMAPHORE_ADMIN_PASSWORD}
+      - TZ=Asia/Kolkata
+    volumes:
+      - semaphore_data:/var/lib/semaphore
+    networks:
+      - core
+    restart: unless-stopped
+
+networks:
+  core:
+    external: true
+
+volumes:
+  semaphore_data:

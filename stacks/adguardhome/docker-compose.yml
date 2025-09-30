@@ -1,0 +1,23 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "3000:3000/tcp" # For initial setup
+      - "8080:80/tcp"   # For the admin UI
+    volumes:
+      - adguard_conf:/opt/adguardhome/conf
+      - adguard_work:/opt/adguardhome/work
+    networks:
+      - core
+
+volumes:
+  adguard_conf:
+  adguard_work:
+
+networks:
+  core:
+    external: true

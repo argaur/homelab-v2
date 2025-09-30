@@ -1,0 +1,17 @@
+- Services:
+  - Grafana:
+      href: https://grafana.msi.local
+      icon: grafana
+      siteMonitor: https://grafana.msi.local
+  - Portainer:
+      href: https://portainer.msi.local
+      icon: portainer
+      siteMonitor: https://portainer.msi.local
+  - Prometheus:
+      href: https://prom.msi.local
+      icon: prometheus
+      siteMonitor: https://prom.msi.local
+  - Nextcloud:
+      href: https://next.msi.local
+      icon: nextcloud
+      siteMonitor: https://next.msi.local

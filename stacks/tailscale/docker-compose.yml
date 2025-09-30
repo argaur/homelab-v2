@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    hostname: msi-homelab
+    environment:
+      - TS_AUTHKEY=   # optional, we'll login manually if blank
+    volumes:
+      - ./data:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    restart: unless-stopped
+    network_mode: "host"   # required for proper VPN

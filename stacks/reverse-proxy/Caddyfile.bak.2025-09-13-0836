@@ -1,0 +1,44 @@
+# Homepage (gethomepage)
+home.msi.local {
+    reverse_proxy http://homepage:3000
+}
+
+# Grafana
+grafana.msi.local {
+    reverse_proxy http://grafana:3000
+}
+
+# Prometheus (already working but keep here for completeness)
+prom.msi.local {
+    reverse_proxy http://prometheus:9090
+}
+
+# Portainer — go to HTTP :9000 upstream (not 9443) to avoid TLS handshake issues
+portainer.msi.local {
+    reverse_proxy http://portainer:9000
+}
+
+# NocoDB (container listens on 8080 by default)
+nocodb.msi.local {
+    reverse_proxy http://nocodb:8080
+}
+
+# Nextcloud (example; keep if you already had)
+next.msi.local {
+    reverse_proxy http://nextcloud:8080
+}
+
+# cAdvisor
+cadvisor.msi.local {
+    reverse_proxy http://cadvisor:8080
+}
+
+# Glances (Prom endpoint on 61209; UI is :61208 if enabled; keep UI if you use it)
+glances.msi.local {
+    reverse_proxy http://glances:61208
+}
+
+# Blackbox exporter
+blackbox.msi.local {
+    reverse_proxy http://blackbox:9115
+}

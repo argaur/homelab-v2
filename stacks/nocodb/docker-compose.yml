@@ -1,0 +1,14 @@
+services:
+  nocodb:
+    image: nocodb/nocodb:latest
+    container_name: nocodb
+    restart: unless-stopped
+    ports:
+      - "8085:8080"        # Host 8085 to avoid AdGuard on 8080
+    environment:
+      NC_PUBLIC_URL: "http://192.168.29.50:8085"   # set to your LAN IP:PORT
+      TZ: "Asia/Kolkata"
+    volumes:
+      - nocodb_data:/usr/app/data
+volumes:
+  nocodb_data: {}

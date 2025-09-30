@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  agent-dvr:
+    image: ispyconnect/agent-dvr:v4.9.6.0 # Using a specific, stable version
+    container_name: agent-dvr
+    ports:
+      - "8090:8090"
+      - "3478:3478/udp"
+    volumes:
+      - ./config:/agent/Media/XML
+      - ./media:/agent/Media/WebServerRoot/Media
+      - /etc/localtime:/etc/localtime:ro
+    devices:
+      - /dev/dri:/dev/dri # For Hardware Acceleration
+    restart: unless-stopped
+    networks:
+      - core
+
+networks:
+  core:
+    external: true

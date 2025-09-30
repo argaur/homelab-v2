@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    ports:
+      - "61208-61209:61208-61209"
+    environment:
+      - GLANCES_OPT=-w # Run in web server mode
+      - TZ=Asia/Kolkata
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    pid: host
+    restart: unless-stopped
+    networks:
+      - core
+
+networks:
+  core:
+    external: true

@@ -1,0 +1,78 @@
+tls:
+  certificates:
+    - certFile: /certs/homelab.lan.fullchain.crt
+      keyFile:  /certs/homelab.lan.key
+
+http:
+  serversTransports:
+    portainerTransport:
+      insecureSkipVerify: true
+
+  routers:
+    portainer:
+      rule: "Host(`portainer.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: portainer
+      tls: {}
+
+    adguard:
+      rule: "Host(`adguard.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: adguard
+      tls: {}
+
+    vault:
+      rule: "Host(`vault.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: vault
+      tls: {}
+
+    grafana:
+      rule: "Host(`grafana.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: grafana
+      tls: {}
+
+    prometheus:
+      rule: "Host(`prom.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: prometheus
+      tls: {}
+
+    kuma:
+      rule: "Host(`kuma.homelab.lan`)"
+      entryPoints: ["websecure"]
+      service: kuma
+      tls: {}
+
+  services:
+    portainer:
+      loadBalancer:
+        servers:
+          - url: "https://portainer:9443"
+        serversTransport: portainerTransport
+
+    adguard:
+      loadBalancer:
+        servers:
+          - url: "http://adguardhome:80"
+
+    vault:
+      loadBalancer:
+        servers:
+          - url: "http://vault:8200"
+
+    grafana:
+      loadBalancer:
+        servers:
+          - url: "http://grafana:3000"
+
+    prometheus:
+      loadBalancer:
+        servers:
+          - url: "http://prometheus:9090"
+
+    kuma:
+      loadBalancer:
+        servers:
+          - url: "http://uptime-kuma:3001"

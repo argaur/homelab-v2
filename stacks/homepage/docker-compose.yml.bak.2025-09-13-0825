@@ -1,0 +1,13 @@
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    networks:
+      - core
+    volumes:
+      - ./config:/app/config:ro
+
+networks:
+  core:
+    external: true

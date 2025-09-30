@@ -1,0 +1,8 @@
+title: Homelab
+theme: dark
+layout:
+  - Resources:
+      - glances:
+          widget:
+            type: glances
+            url: https://glances.msi.local

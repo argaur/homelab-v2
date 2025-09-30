@@ -1,0 +1,39 @@
+server:
+  address: "tcp://0.0.0.0:9091"
+
+log:
+  level: info
+
+theme: auto
+
+session:
+  cookies:
+    - name: "authelia_session"
+      domain: "homelab.lan"
+      authelia_url: "https://auth.homelab.lan"
+      expiration: 1h
+      inactivity: 5m
+
+identity_validation:
+  reset_password:
+    jwt_secret: "change_me_generate_a_long_random_string"
+
+authentication_backend:
+  file:
+    path: /config/users_database.yml
+    password:
+      algorithm: argon2id
+
+storage:
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  filesystem:
+    filename: /config/notification.txt
+
+access_control:
+  default_policy: one_factor
+  rules:
+    - domain: "grafana.homelab.lan"
+      policy: one_factor

@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: n8n-postgres
+    restart: unless-stopped
+    networks: [core]
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: Asia/Kolkata
+    volumes:
+      - n8n_pg:/var/lib/postgresql/data
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    depends_on: [postgres]
+    networks: [core]
+    env_file:
+      - ./secrets.env
+    environment:
+      # base settings
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      # IMPORTANT: set to your node IP or DNS later (used in webhooks)
+      N8N_HOST: ${NODE_IP:-192.168.29.50}
+      N8N_EDITOR_BASE_URL: http://${NODE_IP:-192.168.29.50}:5678
+      WEBHOOK_URL: http://${NODE_IP:-192.168.29.50}:5678/
+      GENERIC_TIMEZONE: Asia/Kolkata
+      TZ: Asia/Kolkata
+      # DB
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_HOST: n8n-postgres
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_DATABASE: ${POSTGRES_DB}
+      DB_POSTGRESDB_USER: ${POSTGRES_USER}
+      DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      # telemetry
+      N8N_DIAGNOSTICS_ENABLED: "false"
+      N8N_VERSION_NOTIFICATIONS_ENABLED: "false"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:5678/healthz"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+
+networks:
+  core:
+    external: true
+
+volumes:
+  n8n_pg:
+  n8n_data:

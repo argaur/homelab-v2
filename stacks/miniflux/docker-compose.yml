@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  miniflux:
+    image: miniflux/miniflux:2.0.51
+    container_name: miniflux
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      ADMIN_USERNAME: ${ADMIN_USERNAME}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      CREATE_ADMIN: 1
+      RUN_MIGRATIONS: 1
+      TZ: "Asia/Kolkata"
+    ports:
+      - "8089:8080"
+    networks:
+      - core
+    restart: unless-stopped
+
+networks:
+  core:
+    external: true

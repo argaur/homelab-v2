@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  remote-desktop:
+    image: lscr.io/linuxserver/webtop:latest
+    container_name: remote-desktop
+    ports:
+      - "3003:3000"
+    volumes:
+      - ./config:/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    shm_size: "1gb"
+    restart: unless-stopped
+    networks:
+      - core
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+networks:
+  core:
+    external: true

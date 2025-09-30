@@ -1,0 +1,15 @@
+# Simple landing (we'll replace with hostnames soon)
+:80 {
+    respond "MSI Homelab Reverse Proxy is alive" 200
+}
+
+# Example: once Portainer is moved to GitOps, we’ll enable this:
+# portainer.msi.lan {
+#     reverse_proxy portainer:9000
+# }
+
+# Iframes: avoid blocking dashboards you want to embed
+header {
+    # do NOT set X-Frame-Options: DENY
+    -X-Frame-Options
+}
